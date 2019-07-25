@@ -14,10 +14,11 @@ void setup() {
 
     ArrayList<Float> inputSignalX = new ArrayList<Float>();
     ArrayList<Float> inputSignalY = new ArrayList<Float>();
+    JSONArray train = loadJSONObject("pet.json").getJSONArray("drawing");           //JSON file with the coordinates
     
-    for (int a = 0; a < JustThePath.path.length; a++) {
-        inputSignalX.add(JustThePath.path[a][0] / 7);
-        inputSignalY.add(JustThePath.path[a][1] / 7);
+    for (int a = 0; a < train.size() ; a++) {
+        inputSignalX.add(train.getJSONObject(a).getFloat("x") * 3);
+        inputSignalY.add(train.getJSONObject(a).getFloat("y") * 3);
     }
     
     yFT = FourierTransform.discreteFourierTransform(inputSignalY.toArray(new Float[inputSignalY.size()]));
@@ -65,7 +66,7 @@ void draw() {
 
     if(angle < - TWO_PI) {
       angle = 0;
-        actualPath.clear();
+      actualPath.remove(actualPath.size());
     }
 
     angle -= dt;
@@ -143,8 +144,4 @@ static class Oscilation{
   
   Oscilation() {
   }
-}
-
-static class JustThePath {
-    static float[][] path = {{}}; //make your own path from a svg file o contact me for how to do it
 }
