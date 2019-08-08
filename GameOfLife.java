@@ -1,4 +1,4 @@
-int[][] grid, nextGen;
+int[][] grid;
 int size = 20;
 int rows, cols;
 
@@ -37,13 +37,12 @@ void draw() {
         }
     }
 
-    nextGen = grid.clone();
+    int[][] nextGen = new int[cols][rows];
 
     for (int i = 0; i < grid.length; ++i) {
         for (int j = 0; j < grid[0].length; ++j) {
-            int neighbours = lookAround(grid, i, j);
-
             int actualState = grid[i][j];
+            int neighbours = lookAround(grid, i, j);
             
             if (actualState == 0) {
                 //the cell its dead :(
